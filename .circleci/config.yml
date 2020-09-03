@@ -7,7 +7,7 @@ workflows:
     jobs:
       - aws-ecr/build-and-push-image:
           repo: 'gotty-mssql-cli'
-          tag: latest
+          tag: latest,${CIRCLE_TAG}
           context: orb/aws-ecr
           filters:
             tags:
