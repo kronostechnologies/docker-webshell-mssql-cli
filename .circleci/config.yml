@@ -1,0 +1,23 @@
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.0
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          repo: '611542441284.dkr.ecr.us-east-1.amazonaws.com/gotty-mssql-cli'
+          tag: latest
+          context: orb/aws-ecr
+          filters:
+            branches:
+              only: master
+
+      - aws-ecr/build-and-push-image:
+          repo: '611542441284.dkr.ecr.us-east-1.amazonaws.com/gotty-mssql-cli'
+          tag: $CIRCLE_TAG
+          context: orb/aws-ecr
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+/
